@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Git PR format and skeleton</title>
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8.646 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 8 8.646 6.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 8l1.647-1.646a.5.5 0 0 0 0-.708z'/%3E%3Cpath d='M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z'/%3E%3Cpath d='M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z'/%3E%3C/svg%3E"
+    type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Comforter+Brush&display=swap"
+    rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Git PR format and skeleton">
+  <style>
+    body {
+      font-family: 'Comfortaa', cursive !important;
+    }
+
+    .footer-sign {
+      font-family: 'Comforter Brush', cursive !important;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <div class="row">
+      <h1 class="col-md-12 my-5">Git PR format and skeleton</h1>
+    </div>
+  </header>
+  <header>
+  </header>
+  <div class="container">
+    <nav class="row">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-git-section-tab"
+          data-bs-toggle="tab" data-bs-target="#nav-git-section" type="button"
+          role="tab" aria-controls="nav-git-section" aria-selected="true">GIT
+          commands</button>
+        <button class="nav-link" id="nav-ddev-section-tab" data-bs-toggle="tab"
+          data-bs-target="#nav-ddev-section" type="button" role="tab"
+          aria-controls="nav-ddev-section" aria-selected="false">DDEV</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
+          data-bs-target="#nav-contact" type="button" role="tab"
+          aria-controls="nav-contact" aria-selected="false">----</button>
+      </div>
+    </nav>
+  </div>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-git-section" role="tabpanel"
+      aria-labelledby="nav-git-section-tab">
+      <section class="container mt-5">
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label for="pr-type">PR type</label>
+            <select id="pr-type" class="form-select"
+              aria-label="Select PR type">
+              <option value="hotfix" selected>Hotfix</option>
+              <option value="feature">Feature</option>
+              <option value="bugfix">Bug Fix</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="prj-type">CORE/THEME</label>
+            <select id="prj-type" class="form-select"
+              aria-label="Select PR type">
+              <option value="THEME" selected>THEME</option>
+              <option value="CORE">CORE</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="ticket-id" class="form-label">Ticket ID</label>
+            <input type="text" class="form-control" id="ticket-id" value="000">
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="branch-name" class="form-label">Branch Name</label>
+            <input type="text" class="form-control" id="branch-name"
+              value="theme-fix">
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="cherry-pick" class="form-label">cherry Pick ID</label>
+            <input type="text" class="form-control" id="cherry-pick"
+              value="xxxxxxxx">
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="commit-message" class="form-label">Commit
+              Message</label>
+            <input type="text" class="form-control" id="commit-message"
+              value="Issues in the theme fixed.">
+          </div>
+        </div>
+      </section>
+      <section class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-10 card my-3">
+            <div class="card-body">
+              <h5 class="card-title">DEV</h5>
+              <div class="d-flex justify-content-between my-2">
+                <code id="code-dev">
+              git checkout development && git pull && git checkout -b <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-DEV
+            </code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  onclick="CopyToClipboard('code-dev');return false;">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code id="code-commit-dev">
+              git commit -m "[<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>][DEV]: <span class="commit-message-show"></span>"
+            </code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  data-bs-original-title="Copy to clipboard"
+                  onclick="CopyToClipboard('code-commit-dev');return false;">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code id="code-push-dev">
+                git push -u origin <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-DEV
+            </code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  data-bs-original-title="Copy to clipboard"
+                  onclick="CopyToClipboard('code-push-dev');return false;">Copy</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-10 card my-3">
+            <div class="card-body">
+              <h5 class="card-title">STG</h5>
+              <div class="d-flex justify-content-between my-2">
+                <code id="code-stg">
+              git checkout stage && git pull && git checkout -b <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-STG && git cherry-pick <span class="cherry-pick-show"></span> && git commit --amend -m "[<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>][STAGE]: <span class="commit-message-show"></span>"
+            </code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  data-bs-original-title="Copy to clipboard"
+                  onclick="CopyToClipboard('code-stg');return false;">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code id="code-push-stg">
+              git push -u origin <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-STG
+            </code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  data-bs-original-title="Copy to clipboard"
+                  onclick="CopyToClipboard('code-push-stg');return false;">Copy</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-10 card my-3">
+            <div class="card-body">
+              <h5 class="card-title">CLEAN</h5>
+              <div class="d-flex justify-content-between my-2">
+                <code id="code-clean">
+              git checkout clean && git pull && git checkout -b <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-CLEAN && git cherry-pick <span class="cherry-pick-show"></span> && git commit --amend -m "[<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>][CLEAN]: <span class="commit-message-show"></span>"
+            </code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  data-bs-original-title="Copy to clipboard"
+                  onclick="CopyToClipboard('code-clean');return false;">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code id="code-push-clean">
+              git push -u origin <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-CLEAN
+            </code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  data-bs-original-title="Copy to clipboard"
+                  onclick="CopyToClipboard('code-push-clean');return false;">Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="tab-pane fade" id="nav-ddev-section" role="tabpanel"
+      aria-labelledby="nav-ddev-section-tab">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label for="project-code" class="form-label">Project Code</label>
+            <input type="text" class="form-control funtional-inputs"
+              id="project-code" value="CCF">
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="db-name" class="form-label">Database Name</label>
+            <input type="text" class="form-control funtional-inputs"
+              id="db-name" value="db-project-name_rd.sql">
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="drush-command" class="form-label">Custom Drush
+              command</label>
+            <input type="text" class="form-control funtional-inputs"
+              id="drush-command" value="en views_ui dblog">
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-10 card my-3">
+            <div class="card-body">
+              <h5 class="card-title">ddev start</h5>
+              <div class="d-flex justify-content-between my-2">
+                <code
+                  id="code-ddev-colima-start">colima start --cpu 4 --memory 6 --disk 100 --dns=1.1.1.1</code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  onclick="CopyToClipboard('code-ddev-colima-start');return false;">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code
+                  id="code-ddev-start">colima start && ddev start && git checkout docroot/sites/default/settings.php</code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  onclick="CopyToClipboard('code-ddev-start');return false;">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code
+                  id="code-ddev-db-download">curl "<span class="db-dwnld-name-show"></span>" >  database_<span class="project-code-show"></span>.sql.gz</code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  onclick="CopyToClipboard('code-ddev-db-download');return false;">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code
+                  id="code-ddev-db-import">ddev import-db -f <span class="db-name-show"></span> -d drupal_<span class="project-code-show"></span></code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  onclick="CopyToClipboard('code-ddev-db-import');return false;">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code
+                  id="code-ddev-db-export">ddev export-db -f "<span class="project-code-show"></span>_db-$(date +"%Y_%m_%d_%I_%M_%p").sql.gz"</code>
+                <button type="button" class="btn-clipboard js-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard"
+                  onclick="CopyToClipboard('code-ddev-db-export');return false;">Copy</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-10 card my-3">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Drush Commands</h5>
+              <div class="d-flex justify-content-between my-2">
+                <code>ddev drush --uri=<span class="project-code-show"></span> cr</code>
+                <button type="button" class="btn-clipboard js-new-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code>ddev drush --uri=<span class="project-code-show"></span> cim -y</code>
+                <button type="button" class="btn-clipboard js-new-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code>ddev drush --uri=<span class="project-code-show"></span> <span class="drush-command-show"></span></code>
+                <button type="button" class="btn-clipboard js-new-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code>ddev get ddev/ddev-adminer && ddev restart</code>
+                <button type="button" class="btn-clipboard js-new-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code>ddev launcha --adminer</code>
+                <button type="button" class="btn-clipboard js-new-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard">Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel"
+      aria-labelledby="nav-contact-tab">...</div>
+  </div>
+  <footer class="container">
+    <div class="d-flex display-6 justify-content-end mt-5 footer-sign">
+      <p><span class="font-monospace">®</span><span>@z33m</span></p>
+    </div>
+  </footer>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+    crossorigin="anonymous">
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.2.min.js"
+    crossorigin="anonymous"></script>
+  <script>
+    (($) => {
+      $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+        // $(".js-copy").mouseenter(function() {
+        //   $(this).attr('title', 'Copied!!');
+        //   $(this).attr('data-bs-original-title', 'Copied!!');
+        // });
+      })
+
+      $('.pr-type-show').text($('#pr-type').val());
+      $('.prj-type-show').text($('#prj-type').val());
+      $('.ticket-id-show').text($('#ticket-id').val());
+      $('.branch-name-show').text($('#branch-name').val());
+      $('.commit-message-show').text($('#commit-message').val());
+      $('.cherry-pick-show').text($('#cherry-pick').val());
+      var listItems = $(".funtional-inputs");
+      for (let i of listItems) {
+        let id = $(i).attr('id');
+        $('.' + id + '-show').text($(i).val());
+        $(i).on('keyup', (e) => {
+          $('.' + id + '-show').text($(i).val());
+        });
+      }
+      $('#pr-type').on('change', function(e) {
+        $('.pr-type-show').text(this.value);
+      });
+      $('#prj-type').on('change', function(e) {
+        $('.prj-type-show').text(this.value);
+      });
+      $('#ticket-id').on('keyup', function(e) {
+        $('.ticket-id-show').text(this.value);
+      });
+      $('#branch-name').on('keyup', function(e) {
+        $('.branch-name-show').text(this.value);
+      });
+      $('#commit-message').on('keyup', function(e) {
+        $('.commit-message-show').text(this.value);
+      });
+      $('#cherry-pick').on('keyup', function(e) {
+        $('.cherry-pick-show').text(this.value);
+      });
+      $('.js-new-copy').on('click', function(e) {
+        CopyToNewClipboard($(this).parent().find('code').get()[0]);
+        $(this).attr('title', 'Copied!!')
+        $(this).data('bs-original-title', 'Copied!!');
+      });
+
+    })(jQuery);
+
+    function CopyToNewClipboard(obj) {
+      var r = document.createRange();
+      r.selectNode(obj)
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+    }
+
+    function CopyToClipboard(id) {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id))
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+    }
+  </script>
+</body>
+
+</html>
