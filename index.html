@@ -64,12 +64,8 @@
             </select>
           </div>
           <div class="col-md-3 mb-3">
-            <label for="prj-type">CORE/THEME</label>
-            <select id="prj-type" class="form-select"
-              aria-label="Select PR type">
-              <option value="THEME" selected>THEME</option>
-              <option value="CORE">CORE</option>
-            </select>
+            <label for="ticket-id" class="form-label">PROJECT NAME</label>
+            <input type="text" class="form-control" id="prj-type" value="ABC">
           </div>
           <div class="col-md-3 mb-3">
             <label for="ticket-id" class="form-label">Ticket ID</label>
@@ -100,7 +96,7 @@
               <h5 class="card-title">DEV</h5>
               <div class="d-flex justify-content-between my-2">
                 <code id="code-dev">
-              git checkout development && git pull && git checkout -b <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-DEV
+              git checkout development && git pull && git checkout -b <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-develop
             </code>
                 <button type="button" class="btn-clipboard js-copy"
                   data-toggle="tooltip" data-placement="top"
@@ -119,7 +115,7 @@
               </div>
               <div class="d-flex justify-content-between my-2">
                 <code id="code-push-dev">
-                git push -u origin <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-DEV
+                git push -u origin <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-develop
             </code>
                 <button type="button" class="btn-clipboard js-copy"
                   data-toggle="tooltip" data-placement="top"
@@ -131,10 +127,10 @@
           </div>
           <div class="col-md-10 card my-3">
             <div class="card-body">
-              <h5 class="card-title">STG</h5>
+              <h5 class="card-title">STAGE</h5>
               <div class="d-flex justify-content-between my-2">
                 <code id="code-stg">
-              git checkout stage && git pull && git checkout -b <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-STG && git cherry-pick <span class="cherry-pick-show"></span> && git commit --amend -m "[<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>][STAGE]: <span class="commit-message-show"></span>"
+              git checkout stage && git pull && git checkout -b <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-stage && git cherry-pick <span class="cherry-pick-show"></span> && git commit --amend -m "[<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>][STAGE]: <span class="commit-message-show"></span>"
             </code>
                 <button type="button" class="btn-clipboard js-copy"
                   data-toggle="tooltip" data-placement="top"
@@ -144,7 +140,7 @@
               </div>
               <div class="d-flex justify-content-between my-2">
                 <code id="code-push-stg">
-              git push -u origin <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-STG
+              git push -u origin <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-stage
             </code>
                 <button type="button" class="btn-clipboard js-copy"
                   data-toggle="tooltip" data-placement="top"
@@ -156,10 +152,10 @@
           </div>
           <div class="col-md-10 card my-3">
             <div class="card-body">
-              <h5 class="card-title">CLEAN</h5>
+              <h5 class="card-title">MASTER</h5>
               <div class="d-flex justify-content-between my-2">
                 <code id="code-clean">
-              git checkout clean && git pull && git checkout -b <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-CLEAN && git cherry-pick <span class="cherry-pick-show"></span> && git commit --amend -m "[<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>][CLEAN]: <span class="commit-message-show"></span>"
+              git checkout clean && git pull && git checkout -b <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-master && git cherry-pick <span class="cherry-pick-show"></span> && git commit --amend -m "[<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>][CLEAN]: <span class="commit-message-show"></span>"
             </code>
                 <button type="button" class="btn-clipboard js-copy"
                   data-toggle="tooltip" data-placement="top"
@@ -169,7 +165,7 @@
               </div>
               <div class="d-flex justify-content-between my-2">
                 <code id="code-push-clean">
-              git push -u origin <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-CLEAN
+              git push -u origin <span class="pr-type-show"></span>/<span class="prj-type-show"></span>-<span class="ticket-id-show"></span>/<span class="branch-name-show"></span>-master
             </code>
                 <button type="button" class="btn-clipboard js-copy"
                   data-toggle="tooltip" data-placement="top"
@@ -282,6 +278,24 @@
                   data-toggle="tooltip" data-placement="top"
                   title="Copy to Clipboard">Copy</button>
               </div>
+            </div>
+          </div>
+          <div class="col-md-10 card my-3">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Composer Commands</h5>
+              <div class="d-flex justify-content-between my-2">
+                <code>composer create-project drupal/recommended-project my_site_name <span class="project-code-show"></span></code>
+                <button type="button" class="btn-clipboard js-new-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard">Copy</button>
+              </div>
+              <div class="d-flex justify-content-between my-2">
+                <code>composer clear-cache</code>
+                <button type="button" class="btn-clipboard js-new-copy"
+                  data-toggle="tooltip" data-placement="top"
+                  title="Copy to Clipboard">Copy</button>
+              </div>
+
             </div>
           </div>
         </div>
