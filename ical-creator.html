@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ical creator</title>
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8.646 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 8 8.646 6.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 8l1.647-1.646a.5.5 0 0 0 0-.708z'/%3E%3Cpath d='M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z'/%3E%3Cpath d='M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z'/%3E%3C/svg%3E"
+    type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Comforter+Brush&display=swap"
+    rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ical creator">
+  <style>
+    body {
+      font-family: 'Comfortaa', cursive !important;
+    }
+
+    .footer-sign {
+      font-family: 'Comforter Brush', cursive !important;
+    }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <div class="row">
+      <h1 class="col-md-12 my-5">Ical creator</h1>
+    </div>
+  </header>
+  <header>
+  </header>
+  <div class="container">
+    <nav class="row">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-ical-section-tab"
+          data-bs-toggle="tab" data-bs-target="#nav-ical-section" type="button"
+          role="tab" aria-controls="nav-ical-section" aria-selected="true">ical generator</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
+          data-bs-target="#nav-contact" type="button" role="tab"
+          aria-controls="nav-contact" aria-selected="false">----</button>
+      </div>
+    </nav>
+  </div>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-ical-section" role="tabpanel"
+      aria-labelledby="nav-ical-section-tab">
+      <section class="container mt-5">
+        <div class="row">
+          <div class="mb-3">
+            <label for="inputData" class="form-label">Enter Event date and event description comma seperated</label>
+            <textarea class="form-control" id="inputData" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <button id="convertButton" type="button" class="btn btn-primary">Primary</button>
+          </div>
+          <div class="mb-3">
+            <label for="outputData" class="form-label"></label>
+            <a href="https://www.example.com" id="downloadLink" class="btn btn-primary" role="button">Download Example</a>
+            <textarea class="form-control" id="outputData" rows="20" readonly></textarea>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+      <section class="container mt-5">
+        <div class="row">
+        </div>
+      </section>
+    </div>
+
+    </div>
+    <footer class="container">
+      <div class="d-flex display-6 justify-content-end mt-5 footer-sign">
+        <p><span class="font-monospace">®</span><span>@z33m</span></p>
+      </div>
+    </footer>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous">
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"
+      crossorigin="anonymous"></script>
+    <script>
+      (($) => {
+
+      })(jQuery);
+    </script>
+    <script>
+      document.getElementById('convertButton').addEventListener('click', function() {
+          const input = document.getElementById('inputData').value;
+          const data = parseInput(input);
+          const icalData = convertToICal(data);
+          document.getElementById('outputData').textContent = icalData;
+          createDownloadLink(icalData);
+      });
+
+      function parseInput(input) {
+          const lines = input.split('\n');
+          const events = [];
+
+          lines.forEach(line => {
+              const parts = line.split(',');
+              if (parts.length === 2) {
+                  const nameHoliday = parts[0].trim();
+                  const date = parts[1].trim();
+                  const [name, holiday] = nameHoliday.split(' - Optional holiday : ').map(part => part.trim());
+                  events.push({ name, holiday, date });
+              }
+          });
+
+          return events;
+      }
+
+      function convertToICal(data) {
+          let ical = "BEGIN:VCALENDAR\nVERSION:2.0\n";
+
+          data.forEach(event => {
+              const { name, holiday, date } = event;
+              const formattedDate = date.replace(/\//g, ""); // Remove slashes for iCal format
+              const uid = `${name}-${holiday}-${formattedDate}`; // Unique identifier for the event
+
+              ical += "BEGIN:VEVENT\n";
+              ical += `UID:${uid}\n`;
+              ical += `SUMMARY:${holiday}\n`;
+              ical += `DESCRIPTION:Optional holiday for ${name}\n`;
+              ical += `DTSTART;VALUE=DATE:${formattedDate}\n`;
+              ical += `DTEND;VALUE=DATE:${formattedDate}\n`;
+              ical += "END:VEVENT\n";
+          });
+
+          ical += "END:VCALENDAR";
+          return ical;
+      }
+
+      function createDownloadLink(icalData) {
+          const blob = new Blob([icalData], { type: 'text/calendar' });
+          const url = URL.createObjectURL(blob);
+          const downloadLink = document.getElementById('downloadLink');
+          downloadLink.href = url;
+          downloadLink.download = 'calendar.ics';
+          downloadLink.textContent = 'Download iCal File';
+          downloadLink.style.display = 'block';
+      }
+    </script>
+  
+  </body>
+  
+  </html>  
