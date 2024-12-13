@@ -9,9 +9,7 @@
     type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Comforter+Brush&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Comforter+Brush&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Ical creator">
   <style>
@@ -24,6 +22,7 @@
     }
   </style>
 </head>
+
 <body>
   <header class="container">
     <div class="row">
@@ -35,18 +34,16 @@
   <div class="container">
     <nav class="row">
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-ical-section-tab"
-          data-bs-toggle="tab" data-bs-target="#nav-ical-section" type="button"
-          role="tab" aria-controls="nav-ical-section" aria-selected="true">ical generator</button>
-        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
-          data-bs-target="#nav-contact" type="button" role="tab"
-          aria-controls="nav-contact" aria-selected="false">----</button>
+        <button class="nav-link active" id="nav-ical-section-tab" data-bs-toggle="tab"
+          data-bs-target="#nav-ical-section" type="button" role="tab" aria-controls="nav-ical-section"
+          aria-selected="true">ical generator</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+          role="tab" aria-controls="nav-contact" aria-selected="false">----</button>
       </div>
     </nav>
   </div>
   <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-ical-section" role="tabpanel"
-      aria-labelledby="nav-ical-section-tab">
+    <div class="tab-pane fade show active" id="nav-ical-section" role="tabpanel" aria-labelledby="nav-ical-section-tab">
       <section class="container mt-5">
         <div class="row">
           <div class="mb-3">
@@ -58,7 +55,8 @@
           </div>
           <div class="mb-3">
             <label for="outputData" class="form-label"></label>
-            <a href="https://www.example.com" id="downloadLink" class="btn btn-primary" role="button">Download Example</a>
+            <a href="https://www.example.com" id="downloadLink" class="btn btn-primary" role="button">Download
+              Example</a>
             <textarea class="form-control" id="outputData" rows="20" readonly></textarea>
           </div>
         </div>
@@ -71,86 +69,82 @@
       </section>
     </div>
 
+  </div>
+  <footer class="container">
+    <div class="d-flex display-6 justify-content-end mt-5 footer-sign">
+      <p><span class="font-monospace">®</span><span>@z33m</span></p>
     </div>
-    <footer class="container">
-      <div class="d-flex display-6 justify-content-end mt-5 footer-sign">
-        <p><span class="font-monospace">®</span><span>@z33m</span></p>
-      </div>
-    </footer>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-      crossorigin="anonymous">
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.2.min.js"
-      crossorigin="anonymous"></script>
-    <script>
-      (($) => {
+  </footer>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.2.min.js" crossorigin="anonymous"></script>
+  <script>
+    (($) => {
 
-      })(jQuery);
-    </script>
-    <script>
-      document.getElementById('convertButton').addEventListener('click', function() {
-          const input = document.getElementById('inputData').value;
-          const data = parseInput(input);
-          const icalData = convertToICal(data);
-          document.getElementById('outputData').textContent = icalData;
-          createDownloadLink(icalData);
+    })(jQuery);
+  </script>
+  <script>
+    document.getElementById('convertButton').addEventListener('click', function () {
+      const input = document.getElementById('inputData').value;
+      const data = parseInput(input);
+      const icalData = convertToICal(data);
+      document.getElementById('outputData').textContent = icalData;
+      createDownloadLink(icalData);
+    });
+
+    function parseInput(input) {
+      const lines = input.split('\n');
+      const events = [];
+
+      lines.forEach(line => {
+        const parts = line.split(',');
+        if (parts.length === 2) {
+          const nameHoliday = parts[0].trim();
+          const date = parts[1].trim();
+          const [name, holiday] = nameHoliday.split(' - Optional holiday : ').map(part => part.trim());
+          events.push({ name, holiday, date });
+        }
       });
 
-      function parseInput(input) {
-          const lines = input.split('\n');
-          const events = [];
+      return events;
+    }
 
-          lines.forEach(line => {
-              const parts = line.split(',');
-              if (parts.length === 2) {
-                  const nameHoliday = parts[0].trim();
-                  const date = parts[1].trim();
-                  const [name, holiday] = nameHoliday.split(' - Optional holiday : ').map(part => part.trim());
-                  events.push({ name, holiday, date });
-              }
-          });
+    function convertToICal(data) {
+      let ical = "BEGIN:VCALENDAR\nVERSION:2.0\n";
 
-          return events;
-      }
+      data.forEach(event => {
+        const { name, holiday, date } = event;
+        const formattedDate = date.replace(/\//g, ""); // Remove slashes for iCal format
+        const uid = `${name}-${holiday}-${formattedDate}`; // Unique identifier for the event
 
-      function convertToICal(data) {
-          let ical = "BEGIN:VCALENDAR\nVERSION:2.0\n";
+        ical += "BEGIN:VEVENT\n";
+        ical += `UID:${uid}\n`;
+        ical += `SUMMARY:${name} - Optional holiday: ${holiday}\n`; // Include full text in summary
+        ical += `DESCRIPTION:Optional holiday for ${name}\n`;
+        ical += `DTSTART;VALUE=DATE:${formattedDate}\n`;
+        ical += `DTEND;VALUE=DATE:${formattedDate}\n`;
+        ical += "END:VEVENT\n";
+      });
 
-          data.forEach(event => {
-              const { name, holiday, date } = event;
-              const formattedDate = date.replace(/\//g, ""); // Remove slashes for iCal format
-              const uid = `${name}-${holiday}-${formattedDate}`; // Unique identifier for the event
+      ical += "END:VCALENDAR";
+      return ical;
+    }
 
-              ical += "BEGIN:VEVENT\n";
-              ical += `UID:${uid}\n`;
-              ical += `SUMMARY:${holiday}\n`;
-              ical += `DESCRIPTION:Optional holiday for ${name}\n`;
-              ical += `DTSTART;VALUE=DATE:${formattedDate}\n`;
-              ical += `DTEND;VALUE=DATE:${formattedDate}\n`;
-              ical += "END:VEVENT\n";
-          });
 
-          ical += "END:VCALENDAR";
-          return ical;
-      }
+    function createDownloadLink(icalData) {
+      const blob = new Blob([icalData], { type: 'text/calendar' });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.getElementById('downloadLink');
+      downloadLink.href = url;
+      downloadLink.download = 'calendar.ics';
+      downloadLink.textContent = 'Download iCal File';
+      downloadLink.style.display = 'block';
+    }
+  </script>
 
-      function createDownloadLink(icalData) {
-          const blob = new Blob([icalData], { type: 'text/calendar' });
-          const url = URL.createObjectURL(blob);
-          const downloadLink = document.getElementById('downloadLink');
-          downloadLink.href = url;
-          downloadLink.download = 'calendar.ics';
-          downloadLink.textContent = 'Download iCal File';
-          downloadLink.style.display = 'block';
-      }
-    </script>
-  
-  </body>
-  
-  </html>  
+</body>
+
+</html>
