@@ -82,11 +82,6 @@
     crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.2.min.js" crossorigin="anonymous"></script>
   <script>
-    (($) => {
-
-    })(jQuery);
-  </script>
-  <script>
     document.getElementById('convertButton').addEventListener('click', function () {
       const input = document.getElementById('inputData').value;
       const data = parseInput(input);
@@ -104,7 +99,7 @@
         if (parts.length === 2) {
           const nameHoliday = parts[0].trim();
           const date = parts[1].trim();
-          const [name, holiday] = nameHoliday.split(' - Optional holiday : ').map(part => part.trim());
+          const [name, holiday] = nameHoliday.split(' - Optional holiday - ').map(part => part.trim());
           events.push({ name, holiday, date });
         }
       });
@@ -122,10 +117,9 @@
 
         ical += "BEGIN:VEVENT\n";
         ical += `UID:${uid}\n`;
-        ical += `SUMMARY:${name} - Optional holiday: ${holiday}\n`; // Include full text in summary
+        ical += `SUMMARY:${name} - Optional holiday - ${holiday}\n`; // Include full text in summary
         ical += `DESCRIPTION:Optional holiday for ${name}\n`;
         ical += `DTSTART;VALUE=DATE:${formattedDate}\n`;
-        ical += `DTEND;VALUE=DATE:${formattedDate}\n`;
         ical += "END:VEVENT\n";
       });
 
