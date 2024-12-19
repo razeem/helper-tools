@@ -46,18 +46,33 @@
     <div class="tab-pane fade show active" id="nav-ical-section" role="tabpanel" aria-labelledby="nav-ical-section-tab">
       <section class="container mt-5">
         <div class="row">
-          <div class="mb-3">
-            <label for="inputData" class="form-label">Enter Event date and event description comma seperated</label>
-            <textarea class="form-control" id="inputData" rows="3"></textarea>
+          <div class="col-md-12">
+            <div class="mb-3">
+              <label for="inputData" class="form-label">Enter Event date and event description comma seperated</label>
+              <textarea class="form-control" id="inputData" rows="3"></textarea>
+            </div>
           </div>
-          <div class="mb-3">
-            <button id="convertButton" type="button" class="btn btn-primary">Primary</button>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <button id="convertButton" type="button" class="btn btn-primary">Generate ICal format</button>
+            </div>
+            <div class="mb-3">
+              <label for="outputData" class="form-label"></label>
+              <a href="https://www.example.com" id="downloadLink" class="btn btn-primary" role="button">Download</a>
+              <textarea class="form-control" id="outputData" rows="20" readonly></textarea>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="outputData" class="form-label"></label>
-            <a href="https://www.example.com" id="downloadLink" class="btn btn-primary" role="button">Download
-              Example</a>
-            <textarea class="form-control" id="outputData" rows="20" readonly></textarea>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <button id="convertVcalButton" type="button" class="btn btn-primary">Generate VCS format</button>
+            </div>
+            <div class="mb-3">
+              <label for="outputVcalData" class="form-label"></label>
+              <a href="https://www.example.com" id="downloadVcalLink" class="btn btn-primary" role="button">Download</a>
+              <textarea class="form-control" id="outputVcalData" rows="20" readonly></textarea>
+            </div>
           </div>
         </div>
       </section>
@@ -89,6 +104,13 @@
       document.getElementById('outputData').textContent = icalData;
       createDownloadLink(icalData);
     });
+    document.getElementById('convertVcalButton').addEventListener('click', function () {
+      const input = document.getElementById('inputData').value;
+      const data = parseInput(input);
+      const vcalData = convertToVCalendar(data);
+      document.getElementById('outputVcalData').textContent = vcalData;
+      createDownloadLink(vcalData, 'downloadVcalLink', 'vcs');
+    });
 
     function parseInput(input) {
       const lines = input.split('\n');
@@ -106,20 +128,56 @@
 
       return events;
     }
+    function convertToVCalendar(data) {
+      let vcs = "BEGIN:VCALENDAR\nVERSION:1.0\n";
+
+      data.forEach(event => {
+        const { name, holiday, date } = event;
+        const formattedDate = date.replace(/\//g, ""); // Remove slashes for VCalendar format
+        const uid = `${name}-${holiday}-${formattedDate}`; // Unique identifier for the event
+
+        // Set the start and end times
+        const startDateTime = `${formattedDate}T000000`; // Start at midnight
+        const endDateTime = `${formattedDate}T235959`; // End at 11:59:59 PM
+
+        vcs += "BEGIN:VEVENT\n";
+        vcs += `UID:${uid}\n`;
+        vcs += `SUMMARY:${name} - Optional holiday - ${holiday}\n`; // Include full text in summary
+        vcs += `DESCRIPTION:Optional holiday for ${name}\n`;
+        vcs += `DTSTART:${startDateTime}\n`; // Start time
+        vcs += `DTEND:${endDateTime}\n`; // End time
+        vcs += "END:VEVENT\n";
+      });
+
+      vcs += "END:VCALENDAR";
+      return vcs;
+    }
 
     function convertToICal(data) {
-      let ical = "BEGIN:VCALENDAR\nVERSION:2.0\n";
+      let ical = "BEGIN:VCALENDAR\nVERSION:2.0\nCALSCALE:GREGORIAN\n";
+
+      // Get the current date and time in UTC format
+      const now = new Date();
+      const dtstamp = now.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z"; // Format: YYYYMMDDTHHMMSSZ
 
       data.forEach(event => {
         const { name, holiday, date } = event;
         const formattedDate = date.replace(/\//g, ""); // Remove slashes for iCal format
         const uid = `${name}-${holiday}-${formattedDate}`; // Unique identifier for the event
 
+        // Calculate the end date (next day)
+        const endDate = new Date(formattedDate.slice(0, 4), formattedDate.slice(4, 6) - 1, formattedDate.slice(6, 8));
+        endDate.setDate(endDate.getDate() + 1);
+        const formattedEndDate = endDate.toISOString().slice(0, 10).replace(/-/g, ""); // Format: YYYYMMDD
+
         ical += "BEGIN:VEVENT\n";
         ical += `UID:${uid}\n`;
         ical += `SUMMARY:${name} - Optional holiday - ${holiday}\n`; // Include full text in summary
         ical += `DESCRIPTION:Optional holiday for ${name}\n`;
         ical += `DTSTART;VALUE=DATE:${formattedDate}\n`;
+        ical += `DTEND;VALUE=DATE:${formattedEndDate}\n`; // Add the end date for one-day event
+        ical += `DTSTAMP:${dtstamp}\n`; // Add the current timestamp
+        ical += `STATUS:CONFIRMED\n`; // Set the status
         ical += "END:VEVENT\n";
       });
 
@@ -128,13 +186,13 @@
     }
 
 
-    function createDownloadLink(icalData) {
+    function createDownloadLink(icalData, elementId = 'downloadLink', extension = "ics") {
       const blob = new Blob([icalData], { type: 'text/calendar' });
       const url = URL.createObjectURL(blob);
-      const downloadLink = document.getElementById('downloadLink');
+      const downloadLink = document.getElementById(elementId);
       downloadLink.href = url;
-      downloadLink.download = 'calendar.ics';
-      downloadLink.textContent = 'Download iCal File';
+      downloadLink.download = 'calendar.' + extension;
+      downloadLink.textContent = 'Download ' + extension + ' File';
       downloadLink.style.display = 'block';
     }
   </script>
