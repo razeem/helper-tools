@@ -48,7 +48,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="mb-3">
-              <label for="inputData" class="form-label">Enter Event date and event description comma seperated</label>
+              <label for="inputData" class="form-label">Enter Event description and event date comma seperated</label>
               <textarea class="form-control" id="inputData" rows="3"></textarea>
             </div>
           </div>
@@ -165,17 +165,16 @@
         const formattedDate = date.replace(/\//g, ""); // Remove slashes for iCal format
         const uid = `${name}-${holiday}-${formattedDate}`; // Unique identifier for the event
 
-        // Calculate the end date (next day)
-        const endDate = new Date(formattedDate.slice(0, 4), formattedDate.slice(4, 6) - 1, formattedDate.slice(6, 8));
-        endDate.setDate(endDate.getDate() + 1);
-        const formattedEndDate = endDate.toISOString().slice(0, 10).replace(/-/g, ""); // Format: YYYYMMDD
+        // Set the start and end times with timezone
+        const startDateTime = `${formattedDate}T000000`; // Start at midnight
+        const endDateTime = `${formattedDate}T235959`; // End at 11:59:59 PM
 
         ical += "BEGIN:VEVENT\n";
         ical += `UID:${uid}\n`;
         ical += `SUMMARY:${name} - Optional holiday - ${holiday}\n`; // Include full text in summary
         ical += `DESCRIPTION:Optional holiday for ${name}\n`;
-        ical += `DTSTART;VALUE=DATE:${formattedDate}\n`;
-        ical += `DTEND;VALUE=DATE:${formattedEndDate}\n`; // Add the end date for one-day event
+        ical += `DTSTART;TZID="Eastern Standard Time":${startDateTime}\n`; // Start time with timezone
+        ical += `DTEND;TZID="Eastern Standard Time":${endDateTime}\n`; // End time with timezone
         ical += `DTSTAMP:${dtstamp}\n`; // Add the current timestamp
         ical += `STATUS:CONFIRMED\n`; // Set the status
         ical += "END:VEVENT\n";
